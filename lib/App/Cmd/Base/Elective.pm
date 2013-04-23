@@ -11,7 +11,7 @@ BEGIN {
 
 use parent 'App::Cmd';
 
-use Module::Runtime qw( compose_module_name module_notational_filename );
+use Module::Runtime qw( compose_module_name module_notional_filename );
 
 my $scanner;
 sub _inc_scanner {
@@ -67,6 +67,8 @@ sub _plugins {
     }
     return @plugins; 
 }
+
+1;
 
 __END__
 
