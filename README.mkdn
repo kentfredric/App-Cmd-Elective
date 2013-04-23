@@ -1,0 +1,38 @@
+# NAME
+
+App::Cmd::Elective - load only ::Command::\* from a whitelist
+
+# VERSION
+
+version 0.1.0
+
+# SYNOPSIS
+
+If you have an existing App which uses App::Cmd and you want to add whitelist only
+support, a simple change is required:
+
+    diff:
+
+    -use App::Cmd::Setup -app
+    +use App::Cmd::Elective -app
+
+    +sub app_commands {
+    +   qw( foo bar )
+    +}
+
+The function `app_commands` returns a list of commandlets to load. ( In additional to any defaults provided by App::Cmd ).
+
+Note: Note these are __NOT__ nessecarily the same as the CLI command names, but these are the "providing module" names, which are expanded based upon the value of [`plugin_search_path`](http://search.cpan.org/perldoc?App::Cmd#plugin\_search\_path), and then the resulting command name is based on the individual modules values of [`command_names`](http://search.cpan.org/perldoc?App::Cmd::Command#command\_names)
+
+Otherwise, except for this minor difference, usage should be identical to that of App::Cmd's standard behaviour
+
+# AUTHOR
+
+Kent Fredric <kentfredric@gmail.com>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Kent Fredric <kentfredric@gmail.com>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
