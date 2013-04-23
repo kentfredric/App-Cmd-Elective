@@ -17,12 +17,19 @@ meta-spec:
   version: 1.4
 name: App-Cmd-Elective
 provides:
+  App::Cmd::Base::Elective:
+    file: lib/App/Cmd/Base/Elective.pm
+    version: v0.1.0
   App::Cmd::Elective:
     file: lib/App/Cmd/Elective.pm
     version: v0.1.0
 requires:
+  App::Cmd: 0
   App::Cmd::Setup: 0
+  Carp: 0
+  Module::Runtime: 0
   Moose::Util: 0
+  Path::ScanINC: 0
   parent: 0
   perl: v5.10.0
   strict: 0
@@ -30,13 +37,17 @@ requires:
 version: 0.1.0
 x_BuiltWith:
   modules:
+    App::Cmd: 0.320
     App::Cmd::Setup: 0.320
+    Carp: 1.28
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.2
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 'NA(possibly not installed)'
     File::Find: 1.23
     File::Temp: 0.23
     Module::Build: 0.4004
+    Module::Runtime: 0.013
     Moose::Util: 2.0801
+    Path::ScanINC: 0.002
     Pod::Coverage::TrustPod: 0.100002
     Test::CPAN::Changes: 0.19
     Test::CPAN::Meta: 0.23

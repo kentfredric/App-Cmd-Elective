@@ -14,6 +14,8 @@ BEGIN {
 use parent 'App::Cmd::Setup';
 use Moose::Util;
 
+require App::Cmd::Base::Elective;
+
 sub _app_base_class { 'App::Cmd::Base::Elective' }
 
 1;

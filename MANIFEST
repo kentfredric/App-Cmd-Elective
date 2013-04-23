@@ -7,6 +7,7 @@ META.json
 META.yml
 README
 dist.ini
+lib/App/Cmd/Base/Elective.pm
 lib/App/Cmd/Elective.pm
 perlcritic.rc
 t/00-compile.t
