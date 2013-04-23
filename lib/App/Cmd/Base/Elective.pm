@@ -9,10 +9,13 @@ BEGIN {
   $App::Cmd::Base::Elective::VERSION = '0.1.0';
 }
 
+# ABSTRACT: A Base class for App::Cmd that uses a whitelist instead of Module::Pluggable
+
 use parent 'App::Cmd';
 
 use Module::Runtime qw( compose_module_name module_notional_filename );
 use Class::Load qw( load_optional_class );
+
 
 sub _expand_plugin_possible_names { 
     my ( $self, $plugin_name ) = @_; 
@@ -43,7 +46,7 @@ sub _plugins {
 
     return @{ $plugins_for{$class} } if $plugins_for{$class};
 
-    if ( not $class->can('app_plugins') ) {
+    if ( not $class->can('app_commands') ) {
         require Carp;
         Carp::croak( 'Class <<'
               . $class
@@ -52,7 +55,7 @@ sub _plugins {
 
     my @plugins;
     my (@search_path) = @{ $self->plugin_search_path };
-    for my $plugin ( $self->app_plugins ) {
+    for my $plugin ( $self->app_commands ) {
         push @plugins, $self->_expand_plugin_name($plugin);
     }
     return @plugins;
@@ -68,11 +71,27 @@ __END__
 
 =head1 NAME
 
-App::Cmd::Base::Elective
+App::Cmd::Base::Elective - A Base class for App::Cmd that uses a whitelist instead of Module::Pluggable
 
 =head1 VERSION
 
 version 0.1.0
+
+=head1 SYNOPSIS
+
+Preferred: 
+
+    package Foo;
+    use App::Cmd::Elective -app;
+    sub app_commands { }
+
+Which is similar, but not identical to
+
+    package Foo;
+    use App::Cmd::Base::Elective;
+    use parent "App::Cmd::Base::Elective";
+
+See L<App::Cmd::Tutorial> for more in depth usage. 
 
 =head1 AUTHOR
 
