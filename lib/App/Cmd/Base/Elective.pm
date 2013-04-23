@@ -24,7 +24,7 @@ sub _expand_plugin_name {
     my ( @search_path ) = @{ $self->plugin_search_path };
     my ( @tried ) = ();
     for my $search_path_element ( @search_path ) { 
-        my $module_name = compose_module_name( $search_path_element, $plugin );
+        my $module_name = compose_module_name( $search_path_element, $plugin_name );
         my $nn          = module_notional_filename( $module_name );
         push @tried, $module_name;
         if ( exists $INC{$nn} ){
