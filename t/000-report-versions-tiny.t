@@ -51,6 +51,7 @@ sub pmver {
 eval { $v .= pmver('App::Cmd','any version') };
 eval { $v .= pmver('App::Cmd::Setup','any version') };
 eval { $v .= pmver('Carp','any version') };
+eval { $v .= pmver('Class::Load','any version') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL','v1.7.2') };
 eval { $v .= pmver('Dist::Zilla::PluginBundle::Author::KENTNL::Lite','v1.3.0') };
 eval { $v .= pmver('File::Find','any version') };
@@ -58,7 +59,6 @@ eval { $v .= pmver('File::Temp','any version') };
 eval { $v .= pmver('Module::Build','0.4004') };
 eval { $v .= pmver('Module::Runtime','any version') };
 eval { $v .= pmver('Moose::Util','any version') };
-eval { $v .= pmver('Path::ScanINC','any version') };
 eval { $v .= pmver('Pod::Coverage::TrustPod','any version') };
 eval { $v .= pmver('Test::CPAN::Changes','0.19') };
 eval { $v .= pmver('Test::CPAN::Meta','any version') };

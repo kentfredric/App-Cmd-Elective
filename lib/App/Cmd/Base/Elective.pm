@@ -12,60 +12,50 @@ BEGIN {
 use parent 'App::Cmd';
 
 use Module::Runtime qw( compose_module_name module_notional_filename );
+use Class::Load qw( load_optional_class );
 
-my $scanner;
-sub _inc_scanner {
-    return $scanner if defined $scanner;
-    require Path::ScanINC;
-    return ( $scanner = Path::ScanINC->new() );
+sub _expand_plugin_possible_names { 
+    my ( $self, $plugin_name ) = @_; 
+    return map { compose_module_name( $_, $plugin_name ) } @{ $self->plugin_search_path };
 }
+
 sub _expand_plugin_name {
     my ( $self, $plugin_name ) = @_;
-    my ( @search_path ) = @{ $self->plugin_search_path };
-    my ( @tried ) = ();
-    for my $search_path_element ( @search_path ) { 
-        my $module_name = compose_module_name( $search_path_element, $plugin_name );
-        my $nn          = module_notional_filename( $module_name );
-        push @tried, $module_name;
-        if ( exists $INC{$nn} ){
-            return $module_name;
-        }
-         my $first_file  = $self->_inc_scanner->first_file(split '/', module_notational_filename( $module_name ) );
-         if ( defined $first_file and -e $first_file ) {
-            return $module_name;
-         }
+    my ( @candidates ) = $self->_expand_plugin_possible_names( $plugin_name );
+    for my $candidate (@candidates) {
+        return $candidate if load_optional_class($candidate);
     }
-    my $message = 'Sorry, no plugin named <<' . $plugin_name . qq[>> could be found\n];
+    my $message =
+      'Sorry, no plugin named <<' . $plugin_name . qq[>> could be found\n];
     $message .= qq[We tried the following expansions:\n];
-    $message .= qq[\t$_\n] for @tried;
+    $message .= qq[\t$_\n] for @candidates;
     $message .= qq[\@INC contains:\n];
-    $message .= qq[\t$_\n] for @{ $self->_inc_scanner->inc };
+    $message .= qq[\t$_\n] for @INC;
     require Carp;
     Carp::croak($message);
 }
 
-
-
 my %plugins_for;
 
 sub _plugins {
-    my ( $self ) = @_; 
+    my ($self) = @_;
     my $class = ref $self || $self;
 
-    return @{ $plugins_for{$class}} if $plugins_for{ $class };
+    return @{ $plugins_for{$class} } if $plugins_for{$class};
 
     if ( not $class->can('app_plugins') ) {
         require Carp;
-        Carp::croak('Class <<' . $class . '>> lacks required method << app_plugins >>');
+        Carp::croak( 'Class <<'
+              . $class
+              . '>> lacks required method << app_plugins >>' );
     }
-    my $scanner = Path::ScanINC->new( );
 
     my @plugins;
-    my ( @search_path ) = @{ $self->plugin_search_path };
+    my (@search_path) = @{ $self->plugin_search_path };
     for my $plugin ( $self->app_plugins ) {
-        push @plugins, $self->_expand_plugin_name( $plugin );
+        push @plugins, $self->_expand_plugin_name($plugin);
     }
-    return @plugins; 
+    return @plugins;
 }
 
 1;

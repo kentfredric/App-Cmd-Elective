@@ -27,9 +27,9 @@ requires:
   App::Cmd: 0
   App::Cmd::Setup: 0
   Carp: 0
+  Class::Load: 0
   Module::Runtime: 0
   Moose::Util: 0
-  Path::ScanINC: 0
   parent: 0
   perl: v5.10.0
   strict: 0
@@ -40,6 +40,7 @@ x_BuiltWith:
     App::Cmd: 0.320
     App::Cmd::Setup: 0.320
     Carp: 1.28
+    Class::Load: 0.20
     Dist::Zilla::PluginBundle::Author::KENTNL: 1.7.2
     Dist::Zilla::PluginBundle::Author::KENTNL::Lite: 'NA(possibly not installed)'
     File::Find: 1.23
@@ -47,7 +48,6 @@ x_BuiltWith:
     Module::Build: 0.4004
     Module::Runtime: 0.013
     Moose::Util: 2.0801
-    Path::ScanINC: 0.002
     Pod::Coverage::TrustPod: 0.100002
     Test::CPAN::Changes: 0.19
     Test::CPAN::Meta: 0.23
