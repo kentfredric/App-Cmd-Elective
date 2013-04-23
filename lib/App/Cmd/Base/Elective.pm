@@ -50,7 +50,7 @@ sub _plugins {
         require Carp;
         Carp::croak( 'Class <<'
               . $class
-              . '>> lacks required method << app_plugins >>' );
+              . '>> lacks required method << app_commands >>' );
     }
 
     my @plugins;
