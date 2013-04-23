@@ -6,7 +6,6 @@ package App::Cmd::Elective;
 # ABSTRACT: load only ::Command::* from a whitelist
 
 use parent 'App::Cmd::Setup';
-use Moose::Util;
 
 require App::Cmd::Base::Elective;
 
